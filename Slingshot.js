@@ -16,6 +16,9 @@ class SlingShot{
     }
     
     fly(){
+        if(this.sling.bodyA){
+            flySound.play();
+        }
         this.sling.bodyA = null;
     }
 

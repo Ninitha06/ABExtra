@@ -14,6 +14,9 @@ class Pig extends BaseClass {
      World.remove(world, this.body);
     // push();
      this.Visiblity = this.Visiblity - 5;
+     if(this.Visiblity<100 && this.Visiblity>75){
+      snortSound.play();
+    }
      tint(255,this.Visiblity);
      image(this.image, this.body.position.x, this.body.position.y, 70, 70);
      noTint();
@@ -23,7 +26,7 @@ class Pig extends BaseClass {
  }
 
 score(){
-  if(this.Visiblity<100 && this.Visiblity>-5){
+  if(this.Visiblity<0 && this.Visiblity>-105){
     score=score+10;
   }
 }

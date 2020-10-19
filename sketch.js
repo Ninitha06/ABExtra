@@ -16,11 +16,18 @@ var score = 0;
 var birds = [];
 
 var bird1,bird2,bird3;
+
+var selectSound, flySound, snortSound;
+
 function preload() {
     getBackgroundImg();
     bgAlternate = loadImage("sprites/bg.png");
     sling1Img = loadImage("sprites/sling1.png");
     sling2Img = loadImage("sprites/sling2.png");
+
+    selectSound = loadSound("sounds/select_bird.mp3");
+    flySound = loadSound("sounds/bird_fly.mp3");
+    snortSound = loadSound("sounds/pig_snort.mp3");
 }
 
 function setup(){
@@ -135,14 +142,13 @@ function draw(){
 
 function mouseReleased(){
     setTimeout(() => {
-        slingshot.fly();
+        slingshot.fly();        
       }, 150);
-    
     gameState = "launched";
 }
 
 function keyPressed(){
-    if(birds.length>0){
+    if(birds.length>0 && gameState==="launched"){
         
         World.remove(world,birds[birds.length-1].body);
         birds.pop();
@@ -154,6 +160,7 @@ function keyPressed(){
             Matter.Body.setPosition(birds[birds.length-1].body,{x:270,y:170});
             slingshot.attach(birds[birds.length-1].body);
             Matter.Body.setAngle(birds[birds.length-1].body,0);
+            selectSound.play();
             gameState = "onsling";
             World.add(world,mConstraint);
         }
