@@ -76,7 +76,9 @@ function setup(){
         mConstraint = MouseConstraint.create(engine, options);
         World.add(world, mConstraint);
 
-
+        //displaying the refresh button
+    refresh = createImg("sprites/refresh.png");
+    refresh.position(15, 10);
         
        // console.log(mConstraint)  
 
@@ -94,6 +96,8 @@ function draw(){
         fill("white");
         textSize(20);
         text( score, width-200, 30);
+
+        refresh.mousePressed(reset);
     Engine.update(engine);
     //strokeWeight(4);
     box1.display();
@@ -124,13 +128,40 @@ function draw(){
 
     slingshot.display();        
 
-    if(gameState === "launched"){
-        World.remove(world,mConstraint);
-    }
-
     pig1.score();
     pig2.score();
+
+    fill("red");
+    
+    //instructions
+    if(gameState==="launched"){
+        strokeWeight(3);
+        World.remove(world,mConstraint);
+        if(birds.length-1>0){
+              text("Press 'Space' for Next Bird", 480, 100);        
+        }
+        else{
+            text("Click on 'Reload' to play again!",450, 100);
+        }
+
+        //when the score reaches 400 then game ends
+        if(score === 400){
+            gameState = "end";
+        }  
+
+    }
+
+    //end state
+    if(gameState==="end"){
+        strokeWeight(3);
+        text("Game Over!!!Click on 'Reload' to play again!",450,100);
+    }
    
+}
+
+//reset function to reload the page
+function reset(){
+    location.reload();
 }
 
 // function mouseDragged(){
@@ -154,8 +185,7 @@ function keyPressed(){
         birds.pop();
      
         if(keyCode === 32 && birds[birds.length-1].body.speed < 1){
-            birds[birds.length-1].trajectory = [];    
-        // birds[birds.length-1].Visiblity = 255;
+         //   birds[birds.length-1].trajectory = [];    
             Matter.Body.setVelocity(birds[birds.length-1].body, { x : 0, y: 0});
             Matter.Body.setPosition(birds[birds.length-1].body,{x:270,y:170});
             slingshot.attach(birds[birds.length-1].body);

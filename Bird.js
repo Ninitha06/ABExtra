@@ -6,8 +6,10 @@ class Bird extends BaseClass {
     this.body.frictionAir - 0.001;
     this.image = loadImage("sprites/bird.png");
     this.smokeImage = loadImage("sprites/smoke.png");
+    this.trans1 = loadImage("sprites/trans1.png");
+    this.trans2 = loadImage("sprites/trans2.png");
     this.trajectory =[];
-   // this.Visiblity = 255;
+    this.Visiblity = 255;
   }
 
   display() {
@@ -25,9 +27,14 @@ class Bird extends BaseClass {
    
     for(var i=0; i<this.trajectory.length; i++){
      ///push();
-     //this.Visiblity = this.Visiblity - 0.1;
+     this.Visiblity = this.Visiblity - 0.05;
     // tint(255,this.Visiblity);
+    if(this.Visiblity > 150)
       image(this.smokeImage, this.trajectory[i][0], this.trajectory[i][1]);
+    else if(this.Visiblity >50 && this.Visiblity < 150)
+      image(this.trans1, this.trajectory[i][0], this.trajectory[i][1]);
+    else if(this.Visiblity <50 && this.Visiblity >-20)
+       image(this.trans2, this.trajectory[i][0], this.trajectory[i][1]);
       //noTint();
      // pop ();
     }

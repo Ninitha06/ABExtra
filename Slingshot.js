@@ -16,7 +16,7 @@ class SlingShot{
     }
     
     fly(){
-        if(this.sling.bodyA){
+        if(this.sling.bodyA && this.sling.bodyA.speed>3){
             flySound.play();
         }
         this.sling.bodyA = null;
