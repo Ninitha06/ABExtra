@@ -118,12 +118,11 @@ function draw(){
    
     platform.display();
 
-    for(var i=0;i<birds.length-1;i++)
-        birds[i].display();
+    
 
     image (sling1Img,270,160);
-    if(birds.length>0)
-        birds[birds.length-1].display();
+    for(var i=0;i<birds.length;i++)
+        birds[i].display();
     image (sling2Img,245,160);
 
     slingshot.display();        
@@ -154,6 +153,8 @@ function draw(){
     //end state
     if(gameState==="end"){
         strokeWeight(3);
+        World.remove(world,mConstraint);
+        birds = [];
         text("Game Over!!!Click on 'Reload' to play again!",450,100);
     }
    
@@ -179,20 +180,19 @@ function mouseReleased(){
 }
 
 function keyPressed(){
-    if(birds.length>0 && gameState==="launched"){
-        
-        World.remove(world,birds[birds.length-1].body);
-        birds.pop();
-     
-        if(keyCode === 32 && birds[birds.length-1].body.speed < 1){
+        if(keyCode === 32 &&  gameState==="launched" && birds.length>0){
          //   birds[birds.length-1].trajectory = [];    
-            Matter.Body.setVelocity(birds[birds.length-1].body, { x : 0, y: 0});
-            Matter.Body.setPosition(birds[birds.length-1].body,{x:270,y:170});
-            slingshot.attach(birds[birds.length-1].body);
-            Matter.Body.setAngle(birds[birds.length-1].body,0);
-            selectSound.play();
-            gameState = "onsling";
-            World.add(world,mConstraint);
+            World.remove(world,birds[birds.length-1].body);
+            birds.pop();
+            if(birds.length>0){
+                Matter.Body.setVelocity(birds[birds.length-1].body, { x : 0, y: 0});
+                Matter.Body.setPosition(birds[birds.length-1].body,{x:270,y:170});
+                slingshot.attach(birds[birds.length-1].body);
+                Matter.Body.setAngle(birds[birds.length-1].body,0);
+                selectSound.play();
+                gameState = "onsling";
+                World.add(world,mConstraint);
+            }
         }
     }
 }
