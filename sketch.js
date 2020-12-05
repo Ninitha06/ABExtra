@@ -194,7 +194,6 @@ function keyPressed(){
                 World.add(world,mConstraint);
             }
         }
-    }
 }
 
 async function getBackgroundImg()
